@@ -1,4 +1,6 @@
 :root {
+  --primary: #ed4031;
+  --grey-border: #e5e7eb;
 }
 * {
   margin: 0px;

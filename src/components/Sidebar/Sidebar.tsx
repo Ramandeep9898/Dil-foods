@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 export const Sidebar = () => {
     return (
-        <nav className="border-[grey-border] border-r h-screen w-fit fixed top-0 z-50">
+        <nav className="border-[grey-border] border-r h-screen w-fit fixed top-0 z-50 ">
             <ul className="h-screen flex justify-start mt-28 flex-col items-center gap-6">
                 <NavLink
                     to="/"

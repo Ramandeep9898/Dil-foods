@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { Route, Routes } from "react-router-dom";
 import { Home } from './components/Home';
-import { Header, Sidebar } from './components';
+import { Header, Sidebar, Table } from './components';
 
 
 
@@ -30,7 +30,7 @@ function App() {
         <Routes>
 
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Home />} />
+          <Route path="/dashboard" element={<Table />} />
           <Route path="/charts" element={<Home />} />
 
         </Routes>
