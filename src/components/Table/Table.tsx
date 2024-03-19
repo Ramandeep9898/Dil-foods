@@ -5,7 +5,6 @@ export const Table = () => {
     return (
         <>
             <About {...DASHBOARD_CONFIG} />
-
         </>
     )
 }
