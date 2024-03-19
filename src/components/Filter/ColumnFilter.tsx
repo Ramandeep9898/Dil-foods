@@ -8,7 +8,7 @@ import { useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { useFilterContext } from "../../hooks/context/useFilterContext";
-import { Filter } from "./filter";
+import { Filter } from "./Filter";
 
 
 export const ColumnFilter = ({ columnTitle, filterElement, id, chips }: ColumnFilterProps) => {
