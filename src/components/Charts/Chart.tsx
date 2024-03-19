@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { toPng } from 'html-to-image';
+
 import { About } from "../About/About"
 import { CHART_CONFIG } from "../../config/chartAbout.config"
 import useGetData from "../../hooks/mutation/useGetData"
@@ -51,11 +53,19 @@ export const Chart = () => {
 
     const createChart = () => {
         if (!isLoading) {
+            var avgMap = {}
             for (var item of initialData) {
+                if (!avgMap[item[createChartData.xAxis]]) {
+                    avgMap[item[createChartData.xAxis]] = { count: 0, sum: 0 }
+                }
+                avgMap[item[createChartData.xAxis]]['count']++;
+                avgMap[item[createChartData.xAxis]]['sum'] = avgMap[item[createChartData.xAxis]]['sum'] + item[createChartData.yAxis];
+            }
 
+            for (var key of Object.keys(avgMap)) {
                 dataSet.push({
-                    [createChartData['xAxis']]: item[createChartData.xAxis],
-                    [createChartData['yAxis']]: item[createChartData.yAxis],
+                    [createChartData['xAxis']]: key,
+                    [createChartData['yAxis']]: avgMap[key]['sum'] / avgMap[key]['count'],
                 })
             }
             ret = { dataSet, ...createChartData }
@@ -65,11 +75,19 @@ export const Chart = () => {
 
     useEffect(() => {
         if (!isLoading) {
+            var avgMap = {}
             for (var item of initialData) {
+                if (!avgMap[item[createChartData.xAxis]]) {
+                    avgMap[item[createChartData.xAxis]] = { count: 0, sum: 0 }
+                }
+                avgMap[item[createChartData.xAxis]]['count']++;
+                avgMap[item[createChartData.xAxis]]['sum'] = avgMap[item[createChartData.xAxis]]['sum'] + item[createChartData.yAxis];
+            }
 
+            for (var key of Object.keys(avgMap)) {
                 dataSet.push({
-                    [createChartData['xAxis']]: item[createChartData.xAxis],
-                    [createChartData['yAxis']]: item[createChartData.yAxis],
+                    [createChartData['xAxis']]: key,
+                    [createChartData['yAxis']]: avgMap[key]['sum'] / avgMap[key]['count'],
                 })
             }
             ret = { dataSet, ...createChartData }
@@ -77,6 +95,19 @@ export const Chart = () => {
         }
     }, [isLoading])
 
+    const elementRef = useRef(null);
+    const htmlToImageConvert = () => {
+        toPng(elementRef.current, { cacheBust: false })
+            .then((dataUrl) => {
+                const link = document.createElement("a");
+                link.download = "my-image-name.png";
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <div className="w-full  pl-16">
@@ -113,20 +144,18 @@ export const Chart = () => {
                         <button>
                             <GrLocationPin size={"24px"} />
                         </button>
-                        <button>
+                        <button onClick={htmlToImageConvert}>
                             <BsDownload size={"24px"} />
                         </button>
 
                     </div>
-                    <div className=" overflow-x-scroll">
+                    <div className=" overflow-x-scroll md:flex md:justify-center md:items-center  p-3 md:p-6" ref={elementRef}>
                         {!isLoading && <CreatedChart createChartData={createChartData} chartDisplayData={chartDisplayData} />}
                     </div>
                 </div>
 
             </div>
-            <div className="ml-36">
-                <p className="">My Workspace</p>
-            </div>
+
         </div>
     )
 }
@@ -135,8 +164,6 @@ const CreatedChart = ({ createChartData, chartDisplayData }) => {
 
 
     const { selectedChart } = createChartData
-    console.log(selectedChart);
-
 
     const returnComponentMap = {
         "lineChart": <LineCharts data={chartDisplayData} />,
@@ -147,7 +174,6 @@ const CreatedChart = ({ createChartData, chartDisplayData }) => {
 }
 
 const LineCharts = ({ data }) => {
-    console.log('RET', data)
 
     return (
         <>
@@ -169,7 +195,6 @@ const LineCharts = ({ data }) => {
 import { BarChart, Bar, Rectangle, ResponsiveContainer } from 'recharts';
 
 const BarCharts = ({ data }) => {
-    console.log('RET', data)
 
     return (
         <BarChart
@@ -198,44 +223,17 @@ const BarCharts = ({ data }) => {
 import { PieChart, Pie, Sector, Cell } from 'recharts';
 
 const TwoLevelPieChart = ({ data }) => {
-    const data01 = [
-        { name: "Group A", value: 400 },
-        { name: "Group B", value: 300 },
-        { name: "Group C", value: 300 },
-        { name: "Group D", value: 200 },
-        { name: "Group E", value: 278 },
-        { name: "Group F", value: 189 }
-    ];
-
-    const data02 = [
-        { name: "Group A", value: 2400 },
-        { name: "Group B", value: 4567 },
-        { name: "Group C", value: 1398 },
-        { name: "Group D", value: 9800 },
-        { name: "Group E", value: 3908 },
-        { name: "Group F", value: 4800 }
-    ];
-
     return (
-        <PieChart width={600} height={400}>
+        <PieChart width={400} height={400}>
             <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={data01}
+                dataKey={data.yAxis}
+                isAnimationActive={true}
+                data={data.dataSet}
                 cx={200}
                 cy={200}
                 outerRadius={80}
                 fill="#8884d8"
                 label
-            />
-            <Pie
-                dataKey="value"
-                data={data02}
-                cx={500}
-                cy={200}
-                innerRadius={40}
-                outerRadius={80}
-                fill="#82ca9d"
             />
             <Tooltip />
         </PieChart>
@@ -267,7 +265,6 @@ const Dropdown = ({ dropdownOptions, updateState, label }: any) => {
                 </svg>
             </button>
             {isDropDownOpen && <div id="dropdown-menu" className="w-full z-10 absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1">
-                {/* <!-- Dropdown content --> */}
                 {dropdownOptions.map((ele) => (
                     <div onClick={() => dropDownClickHandler(ele)} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">{ele[0].toUpperCase() + ele.substring(1)}</div>
                 ))}
