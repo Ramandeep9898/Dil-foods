@@ -14,6 +14,7 @@ import { BsDownload } from "react-icons/bs";
 
 export const Chart = () => {
     const { data: initialData, isLoading } = useGetData()
+    console.log(initialData)
 
 
 

@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import { Home } from './components/Home';
 import { Header, Sidebar, Table, Chart } from './components';
 
+import { FilterProvider } from './hooks/context/useFilterContext';
 
 
 const queryClient = new QueryClient({
@@ -23,18 +24,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      <div className="flex flex-row w-full">
+      <FilterProvider>
 
-        <Sidebar />
-        <Routes>
 
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Table />} />
-          <Route path="/charts" element={<Chart />} />
+        <Header />
+        <div className="flex flex-row w-full">
 
-        </Routes>
-      </div>
+          <Sidebar />
+          <Routes>
+
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Table />} />
+            <Route path="/charts" element={<Chart />} />
+
+          </Routes>
+        </div>
+      </FilterProvider>
     </QueryClientProvider>
 
   )
