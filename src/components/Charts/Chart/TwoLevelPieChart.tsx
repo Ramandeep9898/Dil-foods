@@ -2,15 +2,15 @@ import { PieChart, Pie, Tooltip } from 'recharts';
 
 export const TwoLevelPieChart = ({ data }: any) => {
     return (
-        <PieChart width={400} height={400}>
+        <PieChart width={500} height={300}>
             <Pie
                 dataKey={data.yAxis}
                 isAnimationActive={true}
                 data={data.dataSet}
-                cx={200}
-                cy={200}
+                cx={250}
+                cy={150}
                 outerRadius={80}
-                fill="#8884d8"
+                fill="#ed4031"
                 label
             />
             <Tooltip />

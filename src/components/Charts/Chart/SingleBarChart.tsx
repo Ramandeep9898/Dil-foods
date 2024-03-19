@@ -19,7 +19,7 @@ export const SingleBarChart = ({ data }: any) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey={data.yAxis} fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+            <Bar dataKey={data.yAxis} fill="#ed4031" activeBar={<Rectangle fill="pink" stroke="blue" />} />
         </BarChart>
 
 

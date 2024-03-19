@@ -5,7 +5,7 @@ import { About } from "../About/About"
 import { CHART_CONFIG } from "../../config/chartAbout.config"
 import useGetData from "../../hooks/mutation/useGetData"
 import { FaChartPie, } from "react-icons/fa";
-import { GrLineChart, GrLocationPin } from "react-icons/gr";
+import { GrLineChart } from "react-icons/gr";
 import { MdBarChart } from "react-icons/md";
 import { BsDownload } from "react-icons/bs";
 import { SingleBarChart } from "./Chart/SingleBarChart";
@@ -20,7 +20,7 @@ const xAxis = ["branch", "city", "customerId",
     "productLine"
 
 ]
-const yAxis = ["cogs", "grossMarginPercentage",
+const yAxis = ["cogs", "grosmdarginPercentage",
     "quantity",
     "rating",
     "revenue",
@@ -109,7 +109,7 @@ export const Chart = () => {
     return (
         <div className="w-full  ml-16 mt-24 overflow-x-scroll mr-5 md:mt-36 md:mx-36 ">
             <About {...CHART_CONFIG} />
-            <div className="  mr-4  flex flex-col gap-2 items-center jsustify-center sm:flex-row sm:mx-36 sm:border sm:items-start sm:gap-6 sm:p-7 sm:rounded-lg sm:justify-between">
+            <div className="  mr-4  flex flex-col gap-2 items-center justify-center   lg:flex-row md:border md:items-start md:gap-6 md:p-7 md:rounded-lg md:justify-between">
                 <div className="border w-full px-3 py-4 rounded-lg mb-4   max-w-[500px]">
                     <div className="px-3 flex flex-col gap-3">
                         <div className="">
@@ -138,9 +138,7 @@ export const Chart = () => {
 
                 <div className="border w-full  rounded-lg">
                     <div className="border-b px-3 py-5 flex justify-end gap-3">
-                        <button>
-                            <GrLocationPin size={"24px"} />
-                        </button>
+
                         <button onClick={htmlToImageConvert}>
                             <BsDownload size={"24px"} />
                         </button>
