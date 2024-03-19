@@ -1,0 +1,15 @@
+export const TABLE_CONFIG = [
+    { title: "Branch", filterElement: "chips", key: "branch", chips: ['A', 'B', 'C'] },
+    { title: "City", filterElement: "search", key: "city" },
+    { title: "CustomerId", filterElement: "search", key: "customerId" },
+    { title: "Customer Type", filterElement: "chips", key: "customerType", chips: ['Member', 'Normal'] },
+    { title: "date", filterElement: "search", key: "date" },
+    { title: "Gender", filterElement: "chips", key: "gender", chips: ['Male', 'Female'] },
+    { title: "Gross Margin Percentage", filterElement: "search", key: "grossMarginPercentage" },
+    { title: "Rating", filterElement: "chips", key: "rating", chips: ['4', '5', '6', '7', '8', '9', '10'] },
+    { title: "Revenue", filterElement: "search", key: "revenue" },
+    { title: "Sales", filterElement: "search", key: "sales" },
+    { title: "Tax", filterElement: "search", key: "tax" },
+    { title: "Time", filterElement: "search", key: "time" },
+    { title: "Unit Price", filterElement: "search", key: "unitPrice" },
+]
